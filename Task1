@@ -1,0 +1,52 @@
+import re
+
+def password_strength(password):
+    # Initialize score
+    score = 0
+    
+    # Check length
+    length = len(password)
+    if length < 8:
+        print("Password too short")
+        return "Weak"
+    elif 8 <= length < 12:
+        score += 1
+    elif 12 <= length < 16:
+        score += 2
+    else:
+        score += 3
+    
+    # Check for uppercase letters
+    if re.search(r'[A-Z]', password):
+        score += 1
+    
+    # Check for lowercase letters
+    if re.search(r'[a-z]', password):
+        score += 1
+    
+    # Check for numbers
+    if re.search(r'[0-9]', password):
+        score += 1
+    
+    # Check for special characters
+    if re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        score += 1
+    
+    # Check for uniqueness (basic example - no repeated characters)
+    if len(set(password)) == length:
+        score += 1
+    
+    # Provide feedback based on score
+    if score <= 2:
+        return "Weak"
+    elif 3 <= score <= 4:
+        return "Moderate"
+    elif 5 <= score <= 6:
+        return "Strong"
+    else:
+        return "Very Strong"
+
+# Test the function
+passwords = ["password", "Password1", "P@ssw0rd1234", "P@ssw0rd1234!@#", "Aa1!Aa1!"]
+for pwd in passwords:
+    print(f"Password: {pwd}, Strength: {password_strength(pwd)}")
